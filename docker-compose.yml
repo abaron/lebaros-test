@@ -1,0 +1,105 @@
+version: '3'
+services:
+
+  # node service
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.fe
+    container_name: lebaros_frontend
+    environment:
+      SERVICE_NAME: frontend
+      SERVICE_TAGS: dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules
+      - .:/app
+
+  # php service
+  backendapi:
+    build:
+      context: .
+      dockerfile: Dockerfile.beapi
+    image: digitalocean.com/php
+    container_name: lebaros_backendapi
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: backendapi
+      SERVICE_TAGS: dev
+    # working_dir: /var/www/backend-api
+    volumes:
+      - ./:/var/www
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+
+  # php service
+  backendadmin:
+    build:
+      context: .
+      dockerfile: Dockerfile.beadmin
+    image: digitalocean.com/php
+    container_name: lebaros_backendadmin
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: backendadmin
+      SERVICE_TAGS: dev
+    # working_dir: /var/www/backend-api
+    volumes:
+      - ./:/var/www
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+
+  # nginx service
+  webserver:
+    image: nginx:alpine
+    container_name: lebaros_webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3001:3001"
+      - "3002:443"
+      - "3003:3003"
+      - "3004:443"
+    volumes:
+      - ./:/var/www
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+
+  # mysql service
+  mysql:
+    container_name: lebaros_mysql
+    image: mysql:5.7
+    ports:
+      - "13306:3306"
+    environment:
+      MYSQL_DATABASE: lebaros
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: lebaros
+      MYSQL_PASSWORD: lebaros
+    network_mode: bridge
+    logging:
+      driver: "none"
+
+  # redis service
+  redis:
+    container_name: lebaros_redis
+    image: redis:4
+    ports:
+      - "16379:6379"
+    network_mode: bridge
+    logging:
+      driver: "none"
+
+  # tests
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.fe
+    container_name: lebaros_tests
+    environment:
+      SERVICE_NAME: tests
+      SERVICE_TAGS: dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
