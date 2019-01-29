@@ -26,3 +26,12 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.homeTransition-appear{
+  opacity: 0;
+}
+
+.homeTransition-appear.homeTransition-appear-active{
+  opacity: 1;
+  transition: all .5s ease-in-out;
+}
