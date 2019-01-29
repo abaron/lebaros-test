@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Menu from './components/js/Menu'
+import Navbar from './components/js/Navbar'
+import Footer from './components/js/Footer'
+import Content from './contents/Content'
+import './components/css/page.css'
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          I was changed on the Feature branch
-        </p>
-      </div>
+        <div className="App">
+            <Menu />
+            <Navbar />
+            <div id="page">
+                <Content />
+            </div>
+            <Footer />
+        </div>
     );
   }
 }
