@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +12,5 @@ use Illuminate\Support\Facades\DB;
 */
 
 Route::get('/', function () {
-	dd(DB::select('select * from lb_users'));
     return view('welcome');
 });
