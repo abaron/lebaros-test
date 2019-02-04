@@ -28,48 +28,32 @@ $(function() {
     $('#main-menu > ul > li.has-sub > a').append('<span class="fa fa-angle-right"></span>');
     $('#main-menu > ul > li.has-sub > ul > li.has-sub > a').append('<span class="fa fa-angle-double-right"></span>');
 
-    $('.product-list-slider').slick({
-		slidesToShow: 2,
-		slidesToScroll: 1,
-		prevArrow: '<span class="prev-arr"><i class="fa fa-angle-left"></i></span>',
-		nextArrow: '<span class="next-arr"><i class="fa fa-angle-right"></i></span>',
-		responsive: [
-		{
-			breakpoint: 401,
-			settings: {
-				slidesToShow: 2,
-				slidesToScroll: 1
-			}
-		},
-		{
-			breakpoint: 1025,
-			settings: {
-				slidesToShow: 4,
-				slidesToScroll: 1
-			}
-		}]
-	});
+    function slider() {
+        $('.product-list-slider').slick({
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            prevArrow: '<span class="prev-arr"><i class="fa fa-angle-left"></i></span>',
+            nextArrow: '<span class="next-arr"><i class="fa fa-angle-right"></i></span>',
+            responsive: [
+            {
+                breakpoint: 401,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 1025,
+                settings: {
+                    slidesToShow: 4,
+                    slidesToScroll: 1
+                }
+            }]
+        });
+    }; slider();
 
-    $('.product-list-slider').slick({
-        slidesToShow: 2,
-        slidesToScroll: 1,
-        prevArrow: '<span class="prev-arr"><i class="fa fa-angle-left"></i></span>',
-        nextArrow: '<span class="next-arr"><i class="fa fa-angle-right"></i></span>',
-        responsive: [
-        {
-            breakpoint: 401,
-            settings: {
-                slidesToShow: 2,
-                slidesToScroll: 1
-            }
-        },
-        {
-            breakpoint: 1025,
-            settings: {
-                slidesToShow: 4,
-                slidesToScroll: 1
-            }
-        }]
+    $(window).bind('hashchange', function() {
+        slider();
     });
 
 });
